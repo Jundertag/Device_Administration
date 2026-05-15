@@ -45,13 +45,13 @@ fun AdminStatusCard(
         Text(title, style = MaterialTheme.typography.headlineMedium)
 
         Text(text = "Admin Granted: " + state.adminGranted.toString(),
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelMedium
         )
         Text(text = "Profile Owner: " + state.profileOwner.toString(),
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelMedium
         )
         Text(text = "Device Owner: " + state.deviceOwner.toString(),
-            style = MaterialTheme.typography.labelSmall
+            style = MaterialTheme.typography.labelMedium
         )
     }
 }
