@@ -3,7 +3,9 @@ package com.jayden.deviceadministration.app.activity
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.ui.Modifier
+import com.jayden.deviceadministration.app.activity.screens.AdminDashboardScreen
 import com.jayden.deviceadministration.app.theme.AppTheme
 import com.jayden.deviceadministration.app.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -15,10 +17,11 @@ class MainActivity : AppCompatActivity(), KoinComponent {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // yay some compose content
-            Surface {
-                AppTheme.setAppTheme()
-
+            AppTheme.UseAppTheme {
+                AdminDashboardScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    vm = viewModel
+                )
             }
         }
     }

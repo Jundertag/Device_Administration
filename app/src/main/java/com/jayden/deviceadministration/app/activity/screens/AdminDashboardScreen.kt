@@ -4,11 +4,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayden.deviceadministration.app.model.AdministrationState
 import com.jayden.deviceadministration.app.viewmodel.MainViewModel
@@ -22,7 +25,7 @@ fun AdminDashboardScreen(
     val adminState by vm.adminStatus.collectAsStateWithLifecycle()
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
     ) { innerPadding ->
         AdminStatusCard(
             modifier = Modifier.padding(innerPadding),
@@ -39,11 +42,17 @@ fun AdminStatusCard(
     state: AdministrationState
 ) {
     ElevatedCard(modifier = modifier) {
-        Text(title)
+        Text(title, style = MaterialTheme.typography.headlineMedium)
 
-        Text("Admin Granted: " + state.adminGranted.toString())
-        Text("Profile Owner: " + state.profileOwner.toString())
-        Text("Device Owner: " + state.deviceOwner.toString())
+        Text(text = "Admin Granted: " + state.adminGranted.toString(),
+            style = MaterialTheme.typography.labelSmall
+        )
+        Text(text = "Profile Owner: " + state.profileOwner.toString(),
+            style = MaterialTheme.typography.labelSmall
+        )
+        Text(text = "Device Owner: " + state.deviceOwner.toString(),
+            style = MaterialTheme.typography.labelSmall
+        )
     }
 }
 
