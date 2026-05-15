@@ -30,7 +30,7 @@ fun AdminDashboardScreen(
         AdminStatusCard(
             modifier = Modifier.padding(innerPadding),
             title = "Admin Status",
-            adminState
+            state = adminState
         )
     }
 }
@@ -55,5 +55,3 @@ fun AdminStatusCard(
         )
     }
 }
-
-data class StatusItem(val title: String, val status: Boolean)
