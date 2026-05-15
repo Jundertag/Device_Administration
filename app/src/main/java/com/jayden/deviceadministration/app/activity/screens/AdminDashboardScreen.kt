@@ -24,7 +24,7 @@ fun StatusCard(
     items: List<StatusItem>
 ) {
     ElevatedCard {
-        Text(title, )
+        Text(title)
 
         items.forEach { item ->
             Row { Text(item.title); Text(item.status.toString()) }

@@ -9,14 +9,20 @@ import android.os.PersistableBundle
 import android.os.UserHandle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.jayden.deviceadministration.facade.AdminLoggerFacade
 import com.jayden.deviceadministration.repository.AdminLoggerRepository
 import com.jayden.deviceadministration.repository.AdminRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
     val repo: AdminRepository by inject<AdminRepository>()
     val logger: AdminLoggerRepository by inject<AdminLoggerRepository>()
+    val facade: AdminLoggerFacade by inject<AdminLoggerFacade>()
 
     // receiver method
     override fun onReceive(context: Context, intent: Intent) {
@@ -99,8 +105,23 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
             batchToken
         )
         super.onNetworkLogsAvailable(context, intent, batchToken, networkLogsCount)
-        // TODO: collect network logs with some API
-        // time to do some exploring!
+        val tcpLogs = logs?.let { facade.filterTcpNetworkLogs(it.toList()) }
+        val dnsLogs = logs?.let { facade.filterDnsNetworkLogs(it.toList()) }
+
+        val pendingResult = goAsync()
+
+        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+            try {
+                tcpLogs?.let {
+                    logger.saveTcpNetworkLogs(it)
+                }
+                dnsLogs?.let {
+                    logger.saveDnsNetworkLogs(it)
+                }
+            } finally {
+                pendingResult.finish()
+            }
+        }
     }
 
     override fun onPasswordChanged(context: Context, intent: Intent, user: UserHandle) {
@@ -138,10 +159,22 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
         Log.v(TAG, "New Security Logs are available")
         val manager = getManager(context)
         val logs = manager.retrieveSecurityLogs(getWho(context))
-        logs?.let {
-            logger.saveSecurityLogs(it.toList())
-        }
         super.onSecurityLogsAvailable(context, intent)
+        val mLogs = logs?.let {
+            facade.mapSecurityLogs(it)
+        }
+
+        val pendingResult = goAsync()
+
+        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
+            try {
+                mLogs?.let {
+                    logger.saveSecurityLogs(it)
+                }
+            } finally {
+                pendingResult.finish()
+            }
+        }
     }
 
     override fun onSystemUpdatePending(context: Context, intent: Intent, receivedTime: Long) {

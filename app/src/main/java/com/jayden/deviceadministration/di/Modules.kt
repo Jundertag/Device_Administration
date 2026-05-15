@@ -4,6 +4,7 @@ import androidx.room.Room
 import com.jayden.deviceadministration.app.viewmodel.MainViewModel
 import com.jayden.deviceadministration.data.room.network.NetworkLogDatabase
 import com.jayden.deviceadministration.data.room.security.SecurityLogDatabase
+import com.jayden.deviceadministration.facade.AdminLoggerFacade
 import com.jayden.deviceadministration.repository.AdminLoggerRepository
 import com.jayden.deviceadministration.repository.AdminRepository
 import org.koin.android.ext.koin.androidContext
@@ -29,6 +30,7 @@ object Modules {
             get(),
             get()
         ) }
+        single<AdminLoggerFacade> { AdminLoggerFacade() }
         viewModel<MainViewModel> { MainViewModel() }
     }
 }

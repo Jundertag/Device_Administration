@@ -11,9 +11,10 @@ import com.jayden.deviceadministration.data.room.security.SecurityLogEntity
 
 class AdminLoggerRepository(
     val networkLogDatabase: NetworkLogDatabase,
-    val securityLogDatabase: SecurityLogDatabase
+    val securityLogDatabase: SecurityLogDatabase,
+
 ) {
-    fun saveSecurityLogs(logs: List<SecurityLog>) {
+    suspend fun saveSecurityLogs(logs: List<SecurityLog>) {
         securityLogDatabase.securityLogDao().insertAll(logs.map { log ->
             SecurityLogEntity(
                 logTimestampNanos = log.logTimestampNanos,
@@ -25,7 +26,7 @@ class AdminLoggerRepository(
         })
     }
 
-    fun saveTcpNetworkLogs(logs: List<TcpNetworkLog>) {
+    suspend fun saveTcpNetworkLogs(logs: List<TcpNetworkLog>) {
         networkLogDatabase.tcpNetworkEventDao().insertAll(logs.map { log ->
             TcpNetworkEventEntity(
                 logTimestamp = log.logTimestamp,
@@ -37,7 +38,7 @@ class AdminLoggerRepository(
         })
     }
 
-    fun saveDnsNetworkLogs(logs: List<DnsNetworkLog>) {
+    suspend fun saveDnsNetworkLogs(logs: List<DnsNetworkLog>) {
         networkLogDatabase.dnsNetworkEventDao().insertAll(logs.map { log ->
             DnsNetworkEventEntity(
                 logTimestamp = log.logTimestamp,
