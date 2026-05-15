@@ -8,10 +8,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.jayden.deviceadministration.app.model.AdministrationState
 import com.jayden.deviceadministration.app.viewmodel.MainViewModel
@@ -23,6 +22,10 @@ fun AdminDashboardScreen(
     vm: MainViewModel = koinViewModel()
 ) {
     val adminState by vm.adminStatus.collectAsStateWithLifecycle()
+
+    LaunchedEffect(Unit) {
+        vm.refreshAdminStatus()
+    }
 
     Scaffold(
         modifier = modifier,

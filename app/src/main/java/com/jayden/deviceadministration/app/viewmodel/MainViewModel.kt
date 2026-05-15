@@ -6,7 +6,11 @@ import com.jayden.deviceadministration.repository.AdminRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 
 class MainViewModel(
-    repo: AdminRepository
+    val repo: AdminRepository
 ) : ViewModel() {
     val adminStatus = repo.adminState
+
+    fun refreshAdminStatus() {
+        repo.onAdminStatusChanged()
+    }
 }

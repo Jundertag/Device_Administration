@@ -18,6 +18,6 @@ class AdminService : DeviceAdminService() {
     }
 
     companion object {
-        private const val ADMIN_FOREGROUND_SERVICE_CHANNEL_ID = "admin_foreground_service_channel"
+
     }
 }
