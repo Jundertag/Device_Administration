@@ -31,6 +31,6 @@ object Modules {
             get()
         ) }
         single<AdminLoggerFacade> { AdminLoggerFacade() }
-        viewModel<MainViewModel> { MainViewModel() }
+        viewModel<MainViewModel> { MainViewModel(get()) }
     }
 }
