@@ -9,11 +9,11 @@ import androidx.room.Query
 @Dao
 interface DnsNetworkEventDao {
     @Insert
-    fun insertAll(logs: List<DnsNetworkEventEntity>)
+    suspend fun insertAll(logs: List<DnsNetworkEventEntity>)
 
     @Delete
-    fun deleteLog(log: DnsNetworkEventEntity)
+    suspend fun deleteLog(log: DnsNetworkEventEntity)
 
     @Query("SELECT * FROM DnsNetworkEventEntity ORDER BY logTimestamp DESC")
-    fun pagingSource(): PagingSource<Long, DnsNetworkEventEntity>
+    fun pagingSource(): PagingSource<Int, DnsNetworkEventEntity>
 }

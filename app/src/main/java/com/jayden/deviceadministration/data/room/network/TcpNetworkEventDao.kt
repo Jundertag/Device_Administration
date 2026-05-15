@@ -10,11 +10,11 @@ import com.jayden.deviceadministration.data.room.security.SecurityLogEntity
 @Dao
 interface TcpNetworkEventDao {
     @Insert
-    fun insertAll(logs: List<TcpNetworkEventEntity>)
+    suspend fun insertAll(logs: List<TcpNetworkEventEntity>)
 
     @Delete
-    fun deleteLog(log: TcpNetworkEventEntity)
+    suspend fun deleteLog(log: TcpNetworkEventEntity)
 
     @Query("SELECT * FROM TcpNetworkEventEntity ORDER BY logTimestamp DESC")
-    fun pagingSource(): PagingSource<Long, TcpNetworkEventEntity>
+    fun pagingSource(): PagingSource<Int, TcpNetworkEventEntity>
 }

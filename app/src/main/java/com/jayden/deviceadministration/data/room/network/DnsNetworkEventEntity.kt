@@ -6,7 +6,9 @@ import androidx.room.PrimaryKey
 @Entity
 data class DnsNetworkEventEntity(
     @PrimaryKey val logTimestamp: Long,
+    val logId: Long,
+    val logPackage: String,
     val logHostname: String,
-    val logAddresses: List<String>,
+    val logIpAddresses: List<String>,
     val logAddressesResolved: Int
 )

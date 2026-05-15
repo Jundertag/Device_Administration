@@ -9,9 +9,9 @@ import androidx.room.Query
 @Dao
 interface SecurityLogDao {
     @Insert
-    fun insertAll(logs: List<SecurityLogEntity>)
+    suspend fun insertAll(logs: List<SecurityLogEntity>)
     @Delete
-    fun deleteLog(log: SecurityLogEntity)
+    suspend fun deleteLog(log: SecurityLogEntity)
     @Query("SELECT * FROM SecurityLogEntity ORDER BY logTimestampNanos DESC")
-    fun pagingSource(): PagingSource<Long, SecurityLogEntity>
+    fun pagingSource(): PagingSource<Int, SecurityLogEntity>
 }

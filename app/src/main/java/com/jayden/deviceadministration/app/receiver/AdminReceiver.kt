@@ -101,7 +101,6 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
         super.onNetworkLogsAvailable(context, intent, batchToken, networkLogsCount)
         // TODO: collect network logs with some API
         // time to do some exploring!
-        logger.storeNetworkLogs()
     }
 
     override fun onPasswordChanged(context: Context, intent: Intent, user: UserHandle) {
@@ -140,7 +139,7 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
         val manager = getManager(context)
         val logs = manager.retrieveSecurityLogs(getWho(context))
         logs?.let {
-            logger.storeSecurityLogs(it.toList())
+            logger.saveSecurityLogs(it.toList())
         }
         super.onSecurityLogsAvailable(context, intent)
     }

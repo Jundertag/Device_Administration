@@ -8,6 +8,6 @@ data class TcpNetworkEventEntity(
     @PrimaryKey val logTimestamp: Long,
     val logId: Long,
     val logPackageName: String,
-    val logInetAddress: String,
+    val logIpAddress: String,
     val logPort: Int,
 )
