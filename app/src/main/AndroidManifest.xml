@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SHORT_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application
         android:name=".app.MainApp"
@@ -24,11 +27,16 @@
         <service
             android:name=".app.service.AdminService"
             android:permission="android.permission.BIND_DEVICE_ADMIN"
-            android:exported="false">
+            android:exported="false"
+            android:foregroundServiceType="specialUse">
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_SERVICE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
+        </service>
+        <service android:name=".app.service.ProvisioningForegroundService"
+            android:exported="false"
+            android:foregroundServiceType="shortService">
         </service>
         <receiver android:name=".app.receiver.AdminReceiver"
             android:exported="false"

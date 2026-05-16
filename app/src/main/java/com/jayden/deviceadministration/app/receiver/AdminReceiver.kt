@@ -1,6 +1,7 @@
 package com.jayden.deviceadministration.app.receiver
 
 import android.app.admin.DeviceAdminReceiver
+import android.app.admin.DevicePolicyManager
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -9,6 +10,7 @@ import android.os.PersistableBundle
 import android.os.UserHandle
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.jayden.deviceadministration.app.service.ProvisioningForegroundService
 import com.jayden.deviceadministration.facade.AdminLoggerFacade
 import com.jayden.deviceadministration.repository.AdminLoggerRepository
 import com.jayden.deviceadministration.repository.AdminRepository
@@ -26,9 +28,7 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
 
     // receiver method
     override fun onReceive(context: Context, intent: Intent) {
-        if (intent.action != "match") return
-
-        // do something
+        super.onReceive(context, intent)
     }
 
     // built-in methods in DeviceAdminReceiver
@@ -145,12 +145,16 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
     }
 
     override fun onProfileProvisioningComplete(context: Context, intent: Intent) {
-        Log.v(TAG, "Profile provisioning complete")
+        Log.w(TAG, "========== PROFILE COMPLETE ==========")
+        Log.w(TAG, "Package: ${context.packageName}")
+        Log.w(TAG, "Intent: ${intent.action}")
         val manager = getManager(context)
+        manager.setProfileEnabled(getWho(context))
         if (manager.isProfileOwnerApp(context.packageName)) {
-            manager.setProfileEnabled(getWho(context))
+
             repo.onAdminStatusChanged()
             Log.v(TAG, "Profile is now enabled")
+            context.stopService(Intent(context.applicationContext, ProvisioningForegroundService::class.java))
         }
         super.onProfileProvisioningComplete(context, intent)
     }
