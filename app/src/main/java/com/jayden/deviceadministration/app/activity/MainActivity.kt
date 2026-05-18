@@ -70,24 +70,32 @@ class MainActivity : AppCompatActivity(), KoinComponent {
                     modifier = Modifier.fillMaxSize(),
                     vm = viewModel,
                     onRequestAdminPermission = {
-                        addAdminResultLauncher.launch(Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
-                            putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminReceiver)
-                            putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION, "We need administrator permissions to execute some of our app functions.")
-                        })
+                        if (viewModel.adminStatus.value.adminGranted) {
+                            Toast.makeText(this, "Admin already granted", Toast.LENGTH_SHORT).show()
+                        } else {
+                            addAdminResultLauncher.launch(Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN).apply {
+                                putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, adminReceiver)
+                                putExtra(
+                                    DevicePolicyManager.EXTRA_ADD_EXPLANATION,
+                                    "We need administrator permissions to execute some of our app functions."
+                                )
+                            })
+                        }
                     },
                     onRequestProfileOwner = {
                         if (viewModel.adminStatus.value.isProvisioningAllowed) {
+                            Toast.makeText(this, "Press \"Accept & Continue\" to allow the new profile to be created", Toast.LENGTH_LONG).show()
                             provisionManagedProfileResultLauncher.launch(Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE).apply {
                                 putExtra(
                                     DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME,
                                     adminReceiver
                                 )
                             })
+                            startService(Intent().apply { setClass(applicationContext,
+                                ProvisioningForegroundService::class.java) })
                         } else {
                             Toast.makeText(this, "Unable to Provision new profile: Provisioning not allowed", Toast.LENGTH_LONG).show()
                         }
-                        startService(Intent().apply { setClass(applicationContext,
-                            ProvisioningForegroundService::class.java) })
                     },
                     onRequestDeviceOwner = {
                         Toast.makeText(this, "Feature not available yet", Toast.LENGTH_SHORT).show()
