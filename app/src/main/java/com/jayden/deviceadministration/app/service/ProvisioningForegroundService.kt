@@ -1,17 +1,13 @@
 package com.jayden.deviceadministration.app.service
 
 import android.app.Service
-import android.app.admin.DeviceAdminReceiver
-import android.app.admin.DevicePolicyManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
 import com.jayden.deviceadministration.app.model.AppNotification
 import com.jayden.deviceadministration.app.notification.NotificationConstants
-import com.jayden.deviceadministration.app.receiver.AdminReceiver
 import com.jayden.deviceadministration.app.notification.NotificationFacade
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject

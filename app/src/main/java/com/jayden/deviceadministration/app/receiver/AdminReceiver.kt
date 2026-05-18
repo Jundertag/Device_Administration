@@ -25,11 +25,6 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
     val logger: AdminLoggerRepository by inject<AdminLoggerRepository>()
     val facade: AdminLoggerFacade by inject<AdminLoggerFacade>()
 
-    // receiver method
-    override fun onReceive(context: Context, intent: Intent) {
-        super.onReceive(context, intent)
-    }
-
     // built-in methods in DeviceAdminReceiver
     override fun onBugreportFailed(context: Context, intent: Intent, failureCode: Int) {
         Log.v(TAG, "Bug report failed with code: $failureCode")

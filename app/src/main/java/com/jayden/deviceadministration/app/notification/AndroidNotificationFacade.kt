@@ -8,7 +8,6 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.jayden.deviceadministration.R
 import com.jayden.deviceadministration.app.model.AppNotification
-import com.jayden.deviceadministration.app.notification.NotificationFacade
 
 class AndroidNotificationFacade(
     val context: Context
