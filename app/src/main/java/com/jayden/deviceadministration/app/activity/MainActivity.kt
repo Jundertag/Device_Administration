@@ -92,7 +92,7 @@ class MainActivity : AppCompatActivity(), KoinComponent {
                             ProvisioningForegroundService::class.java) })
                     },
                     onRequestDeviceOwner = {
-
+                        Toast.makeText(this, "Feature not available yet", Toast.LENGTH_SHORT).show()
                     },
                 )
             }
