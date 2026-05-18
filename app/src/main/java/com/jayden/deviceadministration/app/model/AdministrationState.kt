@@ -4,4 +4,5 @@ data class AdministrationState(
     val adminGranted: Boolean,
     val deviceOwner: Boolean,
     val profileOwner: Boolean,
+    val isProvisioningAllowed: Boolean,
 )

@@ -1,13 +1,17 @@
 package com.jayden.deviceadministration.app.service
 
+import android.annotation.SuppressLint
 import android.app.Service
 import android.app.admin.DeviceAdminReceiver
 import android.app.admin.DevicePolicyManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
+import androidx.core.content.ContextCompat
 import com.jayden.deviceadministration.app.model.AppNotification
 import com.jayden.deviceadministration.app.notification.NotificationConstants
 import com.jayden.deviceadministration.app.notification.NotificationFacade
@@ -51,6 +55,10 @@ class ProvisioningForegroundService : Service(), KoinComponent {
                 }
             }
         }
+        ContextCompat.registerReceiver(this, provisioningReceiver,
+            IntentFilter(DeviceAdminReceiver.ACTION_PROFILE_PROVISIONING_COMPLETE),
+            ContextCompat.RECEIVER_NOT_EXPORTED
+        )
     }
 
     override fun onDestroy() {

@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -77,10 +78,16 @@ class MainActivity : AppCompatActivity(), KoinComponent {
                         })
                     },
                     onRequestProfileOwner = {
-                        provisionManagedProfileResultLauncher.launch(Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE).apply {
-                            putExtra(DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME, adminReceiver)
-                        })
-
+                        if (viewModel.adminStatus.value.isProvisioningAllowed) {
+                            provisionManagedProfileResultLauncher.launch(Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE).apply {
+                                putExtra(
+                                    DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME,
+                                    adminReceiver
+                                )
+                            })
+                        } else {
+                            Toast.makeText(this, "Unable to Provision new profile: Provisioning not allowed", Toast.LENGTH_LONG).show()
+                        }
                         startService(Intent().apply { setClass(applicationContext,
                             ProvisioningForegroundService::class.java) })
                     },

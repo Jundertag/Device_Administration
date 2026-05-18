@@ -18,7 +18,8 @@ class AdminRepository(val context: Context) {
     private val _adminState = MutableStateFlow(AdministrationState(
         adminGranted = dpm.isAdminActive(adminReceiver),
         deviceOwner = dpm.isDeviceOwnerApp(context.packageName),
-        profileOwner = dpm.isProfileOwnerApp(context.packageName)
+        profileOwner = dpm.isProfileOwnerApp(context.packageName),
+        isProvisioningAllowed = dpm.isProvisioningAllowed(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE)
     ))
 
     val adminState = _adminState.asStateFlow()
