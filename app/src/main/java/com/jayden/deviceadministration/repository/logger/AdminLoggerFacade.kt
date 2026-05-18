@@ -1,16 +1,17 @@
-package com.jayden.deviceadministration.facade
+package com.jayden.deviceadministration.repository.logger
 
 import android.app.admin.ConnectEvent
 import android.app.admin.DnsEvent
+import android.app.admin.NetworkEvent
+import android.app.admin.SecurityLog
 import com.jayden.deviceadministration.app.model.DnsNetworkLog
-import com.jayden.deviceadministration.app.model.SecurityLog
 import com.jayden.deviceadministration.app.model.TcpNetworkLog
 
 class AdminLoggerFacade {
     fun mapSecurityLogs(
-        logs: List<android.app.admin.SecurityLog.SecurityEvent>
-    ): List<SecurityLog> = logs.map { log ->
-        SecurityLog(
+        logs: List<SecurityLog.SecurityEvent>
+    ): List<com.jayden.deviceadministration.app.model.SecurityLog> = logs.map { log ->
+        com.jayden.deviceadministration.app.model.SecurityLog(
             logTimestampNanos = log.timeNanos,
             logLevel = log.logLevel,
             logTag = log.tag,
@@ -20,7 +21,7 @@ class AdminLoggerFacade {
     }
 
     fun filterTcpNetworkLogs(
-        logs: List<android.app.admin.NetworkEvent>
+        logs: List<NetworkEvent>
     ): List<TcpNetworkLog> = logs.filterIsInstance<ConnectEvent>().map { log ->
         TcpNetworkLog(
             logTimestamp = log.timestamp,
@@ -32,7 +33,7 @@ class AdminLoggerFacade {
     }
 
     fun filterDnsNetworkLogs(
-        logs: List<android.app.admin.NetworkEvent>
+        logs: List<NetworkEvent>
     ): List<DnsNetworkLog> = logs.filterIsInstance<DnsEvent>().map { log ->
         DnsNetworkLog(
             logTimestamp = log.timestamp,

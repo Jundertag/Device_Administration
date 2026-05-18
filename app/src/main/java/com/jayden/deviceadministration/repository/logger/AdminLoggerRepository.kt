@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.repository
+package com.jayden.deviceadministration.repository.logger
 
 import com.jayden.deviceadministration.app.model.DnsNetworkLog
 import com.jayden.deviceadministration.app.model.SecurityLog
