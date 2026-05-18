@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import com.jayden.deviceadministration.R
 import com.jayden.deviceadministration.app.model.AppNotification
 
@@ -48,14 +49,18 @@ class AndroidNotificationFacade(
      * note that [AppNotification.id] and [AppNotification.route] are ignored in this function.
      */
     @RequiresApi(Build.VERSION_CODES.S)
-    override fun buildForegroundNotification(notification: AppNotification): Notification =
-        Notification.Builder(context, notification.channelId).apply {
+    override fun buildForegroundNotification(notification: AppNotification): Notification {
+        ensureNotificationChannels()
+
+        return NotificationCompat.Builder(context, notification.channelId).apply {
             setContentTitle(notification.title)
             setContentText(notification.body)
             setSmallIcon(R.drawable.ic_launcher_foreground)
+            setStyle(NotificationCompat.BigTextStyle())
             setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_DEFAULT)
             setOngoing(true)
         }.build()
+    }
 
     override fun cancel(id: Int) {
         manager.cancel(id)

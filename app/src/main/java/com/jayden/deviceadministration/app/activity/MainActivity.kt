@@ -66,8 +66,6 @@ class MainActivity : AppCompatActivity(), KoinComponent {
         }
         setContent {
             AppTheme.UseAppTheme {
-
-
                 AdminDashboardScreen(
                     modifier = Modifier.fillMaxSize(),
                     vm = viewModel,

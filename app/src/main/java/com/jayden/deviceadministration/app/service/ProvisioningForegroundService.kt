@@ -33,8 +33,6 @@ class ProvisioningForegroundService : Service(), KoinComponent {
     }
 
     private fun initializeForeground() {
-        facade.ensureNotificationChannels()
-
         val notification = facade.buildForegroundNotification(
             AppNotification(
                 NotificationConstants.ADMIN_PROVISIONING_SERVICE_CHANNEL_ID,
@@ -43,7 +41,7 @@ class ProvisioningForegroundService : Service(), KoinComponent {
             )
         )
 
-
+        Log.d(TAG, "startForeground()")
         startForeground(32768, notification)
         Log.v(TAG, "Starting Foreground Service Mode")
         val provisioningReceiver = object : BroadcastReceiver() {
