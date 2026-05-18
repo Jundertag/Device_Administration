@@ -1,6 +1,8 @@
 package com.jayden.deviceadministration.app.service
 
 import android.app.Service
+import android.app.admin.DeviceAdminReceiver
+import android.app.admin.DevicePolicyManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -42,13 +44,16 @@ class ProvisioningForegroundService : Service(), KoinComponent {
         Log.v(TAG, "Starting Foreground Service Mode")
         val provisioningReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context, intent: Intent) {
-
+                if (intent.action == DeviceAdminReceiver.ACTION_PROFILE_PROVISIONING_COMPLETE) {
+                    Log.d(TAG, "Provisioning Successful, stopping foreground service")
+                    stopForeground(STOP_FOREGROUND_REMOVE)
+                    stopSelf()
+                }
             }
         }
     }
 
     override fun onDestroy() {
-        stopForeground(STOP_FOREGROUND_REMOVE)
         Log.d(TAG, "onDestroy()")
         super.onDestroy()
     }
