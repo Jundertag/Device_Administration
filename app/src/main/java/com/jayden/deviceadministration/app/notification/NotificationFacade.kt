@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.facade
+package com.jayden.deviceadministration.app.notification
 
 import android.app.Notification
 import com.jayden.deviceadministration.app.model.AppNotification

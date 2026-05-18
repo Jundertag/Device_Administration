@@ -5,8 +5,8 @@ import com.jayden.deviceadministration.app.viewmodel.MainViewModel
 import com.jayden.deviceadministration.data.room.network.NetworkLogDatabase
 import com.jayden.deviceadministration.data.room.security.SecurityLogDatabase
 import com.jayden.deviceadministration.facade.AdminLoggerFacade
-import com.jayden.deviceadministration.facade.AndroidNotificationFacade
-import com.jayden.deviceadministration.facade.NotificationFacade
+import com.jayden.deviceadministration.app.notification.AndroidNotificationFacade
+import com.jayden.deviceadministration.app.notification.NotificationFacade
 import com.jayden.deviceadministration.repository.AdminLoggerRepository
 import com.jayden.deviceadministration.repository.AdminRepository
 import org.koin.android.ext.koin.androidContext

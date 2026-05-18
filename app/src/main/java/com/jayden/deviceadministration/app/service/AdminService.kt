@@ -4,7 +4,7 @@ import android.app.admin.DeviceAdminService
 import android.content.Intent
 import com.jayden.deviceadministration.app.model.AppNotification
 import com.jayden.deviceadministration.app.notification.NotificationConstants
-import com.jayden.deviceadministration.facade.NotificationFacade
+import com.jayden.deviceadministration.app.notification.NotificationFacade
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

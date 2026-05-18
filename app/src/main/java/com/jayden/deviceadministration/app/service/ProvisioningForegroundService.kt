@@ -12,7 +12,7 @@ import android.util.Log
 import com.jayden.deviceadministration.app.model.AppNotification
 import com.jayden.deviceadministration.app.notification.NotificationConstants
 import com.jayden.deviceadministration.app.receiver.AdminReceiver
-import com.jayden.deviceadministration.facade.NotificationFacade
+import com.jayden.deviceadministration.app.notification.NotificationFacade
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

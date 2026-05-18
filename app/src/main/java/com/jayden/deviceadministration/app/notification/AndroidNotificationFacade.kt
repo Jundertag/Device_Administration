@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.facade
+package com.jayden.deviceadministration.app.notification
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -8,7 +8,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.jayden.deviceadministration.R
 import com.jayden.deviceadministration.app.model.AppNotification
-import com.jayden.deviceadministration.app.notification.NotificationConstants
+import com.jayden.deviceadministration.app.notification.NotificationFacade
 
 class AndroidNotificationFacade(
     val context: Context
