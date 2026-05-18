@@ -9,7 +9,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.content.PackageManagerCompat
 import com.jayden.deviceadministration.app.model.AppNotification
 import com.jayden.deviceadministration.app.notification.NotificationConstants
 import com.jayden.deviceadministration.app.notification.NotificationFacade
