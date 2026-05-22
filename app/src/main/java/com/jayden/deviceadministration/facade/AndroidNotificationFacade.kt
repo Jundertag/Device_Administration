@@ -5,10 +5,11 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.jayden.deviceadministration.R
 import com.jayden.deviceadministration.app.model.AppNotification
-import com.jayden.deviceadministration.app.notification.NotificationConstants
+import com.jayden.deviceadministration.core.notifications.NotificationConstants
 
 class AndroidNotificationFacade(
     val context: Context
@@ -56,9 +57,21 @@ class AndroidNotificationFacade(
             setSmallIcon(R.drawable.ic_launcher_foreground)
             setForegroundServiceBehavior(Notification.FOREGROUND_SERVICE_DEFAULT)
             setOngoing(true)
-        }.build()
+        }.build().also {
+            Log.v(TAG, "buildForegroundNotification(\n" +
+                    "    channelId: ${notification.channelId}\n" +
+                    "    title: ${notification.title}\n" +
+                    "    body: ${notification.body}\n" +
+                    "    id: ${notification.id}\n" +
+                    "    route: ${notification.route?.action}\n" +
+                    ")")
+        }
 
     override fun cancel(id: Int) {
         manager.cancel(id)
+    }
+
+    companion object {
+        private const val TAG = "AndroidNotificationFacade"
     }
 }

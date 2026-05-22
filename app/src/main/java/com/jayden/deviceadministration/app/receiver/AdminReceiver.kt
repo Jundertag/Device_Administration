@@ -1,7 +1,8 @@
 package com.jayden.deviceadministration.app.receiver
 
+import android.annotation.SuppressLint
 import android.app.admin.DeviceAdminReceiver
-import android.app.admin.DevicePolicyManager
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -10,7 +11,6 @@ import android.os.PersistableBundle
 import android.os.UserHandle
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.jayden.deviceadministration.app.service.ProvisioningForegroundService
 import com.jayden.deviceadministration.facade.AdminLoggerFacade
 import com.jayden.deviceadministration.repository.AdminLoggerRepository
 import com.jayden.deviceadministration.repository.AdminRepository
@@ -27,6 +27,7 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
     val facade: AdminLoggerFacade by inject<AdminLoggerFacade>()
 
     // receiver method
+    @SuppressLint("UnsafeProtectedBroadcastReceiver")
     override fun onReceive(context: Context, intent: Intent) {
         super.onReceive(context, intent)
     }
@@ -99,29 +100,7 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
         networkLogsCount: Int
     ) {
         Log.v(TAG, "$networkLogsCount logs available, token of: $batchToken")
-        val manager = getManager(context)
-        val logs = manager.retrieveNetworkLogs(
-            getWho(context),
-            batchToken
-        )
-        super.onNetworkLogsAvailable(context, intent, batchToken, networkLogsCount)
-        val tcpLogs = logs?.let { facade.filterTcpNetworkLogs(it.toList()) }
-        val dnsLogs = logs?.let { facade.filterDnsNetworkLogs(it.toList()) }
-
-        val pendingResult = goAsync()
-
-        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
-            try {
-                tcpLogs?.let {
-                    logger.saveTcpNetworkLogs(it)
-                }
-                dnsLogs?.let {
-                    logger.saveDnsNetworkLogs(it)
-                }
-            } finally {
-                pendingResult.finish()
-            }
-        }
+        TODO("onNetworkLogsAvailable()")
     }
 
     override fun onPasswordChanged(context: Context, intent: Intent, user: UserHandle) {
@@ -145,40 +124,12 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
     }
 
     override fun onProfileProvisioningComplete(context: Context, intent: Intent) {
-        Log.w(TAG, "========== PROFILE COMPLETE ==========")
-        Log.w(TAG, "Package: ${context.packageName}")
-        Log.w(TAG, "Intent: ${intent.action}")
-        val manager = getManager(context)
-        manager.setProfileEnabled(getWho(context))
-        if (manager.isProfileOwnerApp(context.packageName)) {
-
-            repo.onAdminStatusChanged()
-            Log.v(TAG, "Profile is now enabled")
-            context.stopService(Intent(context.applicationContext, ProvisioningForegroundService::class.java))
-        }
-        super.onProfileProvisioningComplete(context, intent)
+        Log.v(TAG, "Profile Provisioning Complete")
     }
 
     override fun onSecurityLogsAvailable(context: Context, intent: Intent) {
         Log.v(TAG, "New Security Logs are available")
-        val manager = getManager(context)
-        val logs = manager.retrieveSecurityLogs(getWho(context))
-        super.onSecurityLogsAvailable(context, intent)
-        val mLogs = logs?.let {
-            facade.mapSecurityLogs(it)
-        }
-
-        val pendingResult = goAsync()
-
-        CoroutineScope(SupervisorJob() + Dispatchers.IO).launch {
-            try {
-                mLogs?.let {
-                    logger.saveSecurityLogs(it)
-                }
-            } finally {
-                pendingResult.finish()
-            }
-        }
+        TODO("onSecurityLogsAvailable()")
     }
 
     override fun onSystemUpdatePending(context: Context, intent: Intent, receivedTime: Long) {

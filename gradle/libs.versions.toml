@@ -7,11 +7,12 @@ espressoCore = "3.7.0"
 appcompat = "1.7.1"
 material = "1.14.0"
 koin-bom = "4.2.1"
-compose-bom = "2026.05.00"
+compose-bom = "2026.05.01"
 kotlin = "2.3.21"
-koin-compiler = "1.0.0-RC2"
+koin-compiler = "1.0.0"
 ksp = "2.3.4"
 room = "2.8.4"
+navigation3 = "1.2.0-alpha03"
 
 [libraries]
 # android core
@@ -28,6 +29,7 @@ koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-android = { module = "io.insert-koin:koin-android" }
 koin-compose = { module = "io.insert-koin:koin-compose" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel" }
+koin-compose-navigation3 = { module = "io.insert-koin:koin-compose-navigation3" }
 
 # compose
 compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
@@ -44,6 +46,10 @@ room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-paging = { module = "androidx.room:room-paging", version.ref = "room" }
+
+# navigation
+navigation-runtime = { module = "androidx.navigation3:navigation3-runtime", version.ref = "navigation3" }
+navigation-ui = { module = "androidx.navigation3:navigation3-ui", version.ref = "navigation3" }
 
 
 [plugins]

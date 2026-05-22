@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.app.notification
+package com.jayden.deviceadministration.core.notifications
 
 object NotificationConstants {
     // channel ids

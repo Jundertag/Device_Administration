@@ -65,10 +65,15 @@ dependencies {
     implementation(libs.koin.android)
     implementation(libs.koin.compose)
     implementation(libs.koin.compose.viewmodel)
+    implementation(libs.koin.compose.navigation3)
 
     // room
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
+
+    // navigation
+    implementation(libs.navigation.runtime)
+    implementation(libs.navigation.ui)
 }

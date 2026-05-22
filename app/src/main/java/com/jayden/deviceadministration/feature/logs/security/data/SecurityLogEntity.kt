@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.data.room.security
+package com.jayden.deviceadministration.feature.logs.security.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

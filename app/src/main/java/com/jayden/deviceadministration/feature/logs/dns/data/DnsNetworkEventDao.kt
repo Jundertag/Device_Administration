@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.data.room.network
+package com.jayden.deviceadministration.feature.logs.dns.data
 
 import androidx.paging.PagingSource
 import androidx.room.Dao

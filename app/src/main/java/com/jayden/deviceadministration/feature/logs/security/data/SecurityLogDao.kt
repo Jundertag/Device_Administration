@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.data.room.security
+package com.jayden.deviceadministration.feature.logs.security.data
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
