@@ -13,13 +13,13 @@ import androidx.compose.ui.Modifier
 import com.jayden.deviceadministration.feature.dashboard.ui.AdminDashboardScreen
 import com.jayden.deviceadministration.app.receiver.AdminReceiver
 import com.jayden.deviceadministration.app.service.ProvisioningForegroundService
-import com.jayden.deviceadministration.app.theme.AppTheme
-import com.jayden.deviceadministration.app.viewmodel.MainViewModel
+import com.jayden.deviceadministration.core.design.theme.AppTheme
+import com.jayden.deviceadministration.feature.dashboard.ui.AdminStateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
 class MainActivity : AppCompatActivity(), KoinComponent {
-    val viewModel: MainViewModel by viewModel()
+    val viewModel: AdminStateViewModel by viewModel()
 
     private val adminReceiver by lazy { ComponentName(applicationContext, AdminReceiver::class.java) }
 

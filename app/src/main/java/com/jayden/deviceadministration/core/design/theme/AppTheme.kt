@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.app.theme
+package com.jayden.deviceadministration.core.design.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

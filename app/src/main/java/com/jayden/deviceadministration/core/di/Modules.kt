@@ -1,13 +1,13 @@
 package com.jayden.deviceadministration.core.di
 
 import androidx.room.Room
-import com.jayden.deviceadministration.app.viewmodel.MainViewModel
+import com.jayden.deviceadministration.feature.dashboard.ui.AdminStateViewModel
 import com.jayden.deviceadministration.core.database.AppDatabase
-import com.jayden.deviceadministration.facade.AdminLoggerFacade
+import com.jayden.deviceadministration.core.permissions.AndroidPermissionChecker
+import com.jayden.deviceadministration.core.permissions.PermissionChecker
 import com.jayden.deviceadministration.facade.AndroidNotificationFacade
 import com.jayden.deviceadministration.facade.NotificationFacade
-import com.jayden.deviceadministration.repository.AdminLoggerRepository
-import com.jayden.deviceadministration.repository.AdminRepository
+import com.jayden.deviceadministration.feature.dashboard.data.AdminStateMonitor
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -17,12 +17,6 @@ object Modules {
         single<AppDatabase> {
             Room.databaseBuilder(androidContext(), AppDatabase::class.java, "app-database").build()
         }
-        single<AdminRepository> { AdminRepository(androidContext()) }
-        single<AdminLoggerRepository> { AdminLoggerRepository(
-            get()
-        ) }
-        single<AdminLoggerFacade> { AdminLoggerFacade() }
-        single<NotificationFacade> { AndroidNotificationFacade(androidContext()) }
-        viewModel<MainViewModel> { MainViewModel(get()) }
+        single<PermissionChecker> { AndroidPermissionChecker(androidContext()) }
     }
 }

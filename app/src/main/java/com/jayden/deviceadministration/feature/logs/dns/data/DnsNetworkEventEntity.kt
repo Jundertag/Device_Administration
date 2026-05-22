@@ -9,6 +9,8 @@ data class DnsNetworkEventEntity(
     val logId: Long,
     val logPackage: String,
     val logHostname: String,
+    val logIpAddress: String,
+    val logPort: Int,
     val logIpAddresses: List<String>,
     val logAddressesResolved: Int
 )

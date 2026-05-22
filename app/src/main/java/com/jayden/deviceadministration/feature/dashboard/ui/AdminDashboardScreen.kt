@@ -17,14 +17,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.jayden.deviceadministration.app.model.AdministrationState
-import com.jayden.deviceadministration.app.viewmodel.MainViewModel
+import com.jayden.deviceadministration.feature.dashboard.domain.AdministrationState
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AdminDashboardScreen(
     modifier: Modifier = Modifier,
-    vm: MainViewModel = koinViewModel(),
+    vm: AdminStateViewModel = koinViewModel(),
     onRequestAdminPermission: () -> Unit,
     onRequestProfileOwner: () -> Unit,
     onRequestDeviceOwner: () -> Unit,

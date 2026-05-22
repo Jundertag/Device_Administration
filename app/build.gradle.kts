@@ -7,9 +7,7 @@ plugins {
 android {
     namespace = "com.jayden.deviceadministration"
     compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
+        version = release(37)
     }
 
     defaultConfig {
@@ -17,6 +15,7 @@ android {
         minSdk = 28
         targetSdk {
             version = release(36)
+
         }
         versionCode = 1
         versionName = "1.0"

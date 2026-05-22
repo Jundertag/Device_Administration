@@ -2,7 +2,6 @@ package com.jayden.deviceadministration.app.receiver
 
 import android.annotation.SuppressLint
 import android.app.admin.DeviceAdminReceiver
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -11,20 +10,12 @@ import android.os.PersistableBundle
 import android.os.UserHandle
 import android.util.Log
 import androidx.annotation.RequiresApi
-import com.jayden.deviceadministration.facade.AdminLoggerFacade
-import com.jayden.deviceadministration.repository.AdminLoggerRepository
-import com.jayden.deviceadministration.repository.AdminRepository
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import com.jayden.deviceadministration.feature.dashboard.data.AdminStateMonitor
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
-    val repo: AdminRepository by inject<AdminRepository>()
-    val logger: AdminLoggerRepository by inject<AdminLoggerRepository>()
-    val facade: AdminLoggerFacade by inject<AdminLoggerFacade>()
+    val repo: AdminStateMonitor by inject<AdminStateMonitor>()
 
     // receiver method
     @SuppressLint("UnsafeProtectedBroadcastReceiver")
@@ -74,13 +65,13 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
     override fun onDisabled(context: Context, intent: Intent) {
         Log.v(TAG, "Admin no longer granted.")
         super.onDisabled(context, intent)
-        repo.onAdminStatusChanged()
+        repo.refreshAdminStatus()
     }
 
     override fun onEnabled(context: Context, intent: Intent) {
         Log.v(TAG, "Admin granted to this app")
         super.onEnabled(context, intent)
-        repo.onAdminStatusChanged()
+        repo.refreshAdminStatus()
     }
 
     override fun onLockTaskModeEntering(context: Context, intent: Intent, pkg: String) {
@@ -140,13 +131,13 @@ class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
     override fun onTransferAffiliatedProfileOwnershipComplete(context: Context, user: UserHandle) {
         Log.v(TAG, "Transfer of affiliated profile admin has been completed")
         super.onTransferAffiliatedProfileOwnershipComplete(context, user)
-        repo.onAdminStatusChanged()
+        repo.refreshAdminStatus()
     }
 
     override fun onTransferOwnershipComplete(context: Context, bundle: PersistableBundle?) {
         Log.v(TAG, "Transfer of this admin has been completed")
         super.onTransferOwnershipComplete(context, bundle)
-        repo.onAdminStatusChanged()
+        repo.refreshAdminStatus()
     }
 
     override fun onUserAdded(context: Context, intent: Intent, addedUser: UserHandle) {

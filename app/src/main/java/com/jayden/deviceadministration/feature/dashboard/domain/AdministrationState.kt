@@ -1,4 +1,4 @@
-package com.jayden.deviceadministration.app.model
+package com.jayden.deviceadministration.feature.dashboard.domain
 
 data class AdministrationState(
     val adminGranted: Boolean,
