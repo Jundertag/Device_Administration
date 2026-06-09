@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import com.jayden.deviceadministration.app.service.ProvisioningForegroundService
 import com.jayden.deviceadministration.repository.logger.AdminLoggerFacade
 import com.jayden.deviceadministration.repository.logger.AdminLoggerRepository
-import com.jayden.deviceadministration.repository.AdminRepository
+import com.jayden.deviceadministration.repository.status.AdminStatusRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -21,7 +21,7 @@ import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 
 class AdminReceiver : DeviceAdminReceiver(), KoinComponent {
-    val repo: AdminRepository by inject<AdminRepository>()
+    val repo: AdminStatusRepository by inject<AdminStatusRepository>()
     val logger: AdminLoggerRepository by inject<AdminLoggerRepository>()
     val facade: AdminLoggerFacade by inject<AdminLoggerFacade>()
 

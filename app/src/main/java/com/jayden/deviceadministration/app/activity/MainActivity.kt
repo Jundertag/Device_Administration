@@ -3,6 +3,7 @@ package com.jayden.deviceadministration.app.activity
 import android.app.admin.DevicePolicyManager
 import android.content.ComponentName
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -74,7 +75,7 @@ class MainActivity : AppCompatActivity(), KoinComponent {
                         }
                     },
                     onRequestProfileOwner = {
-                        if (viewModel.adminStatus.value.isProvisioningAllowed) {
+                        if (viewModel.adminStatus.value.isProfileOwnerAllowed) {
                             Toast.makeText(this, "Press \"Accept & Continue\" to allow the new profile to be created", Toast.LENGTH_LONG).show()
                             provisionManagedProfileResultLauncher.launch(Intent(DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE).apply {
                                 putExtra(
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity(), KoinComponent {
                             startService(Intent().apply { setClass(applicationContext,
                                 ProvisioningForegroundService::class.java) })
                         } else {
+
                             Toast.makeText(this, "Unable to Provision new profile: Provisioning not allowed", Toast.LENGTH_LONG).show()
                         }
                     },

@@ -1,16 +1,18 @@
 package com.jayden.deviceadministration.app.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.jayden.deviceadministration.app.model.AdministrationState
-import com.jayden.deviceadministration.repository.AdminRepository
-import kotlinx.coroutines.flow.MutableStateFlow
+import com.jayden.deviceadministration.repository.status.AdminStatusRepository
 
 class MainViewModel(
-    val repo: AdminRepository
+    val repo: AdminStatusRepository
 ) : ViewModel() {
     val adminStatus = repo.adminState
 
     fun refreshAdminStatus() {
         repo.onAdminStatusChanged()
+    }
+
+    fun getProfileOwnerNotAllowedReason(): String {
+        repo
     }
 }

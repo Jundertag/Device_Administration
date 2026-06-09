@@ -8,7 +8,7 @@ import com.jayden.deviceadministration.repository.logger.AdminLoggerFacade
 import com.jayden.deviceadministration.app.notification.AndroidNotificationFacade
 import com.jayden.deviceadministration.app.notification.NotificationFacade
 import com.jayden.deviceadministration.repository.logger.AdminLoggerRepository
-import com.jayden.deviceadministration.repository.AdminRepository
+import com.jayden.deviceadministration.repository.status.AdminStatusRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.dsl.module
@@ -27,7 +27,7 @@ object Modules {
                 NetworkLogDatabase::class.java, "network-log-database"
             ).build()
         }
-        single<AdminRepository> { AdminRepository(androidContext()) }
+        single<AdminStatusRepository> { AdminStatusRepository(androidContext()) }
         single<AdminLoggerRepository> { AdminLoggerRepository(
             get(),
             get()
