@@ -12,17 +12,16 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
-import com.jayden.deviceadministration.app.activity.screens.AdminDashboardScreen
+import com.jayden.deviceadministration.feature.dashboard.ui.AdminDashboardScreen
 import com.jayden.deviceadministration.app.receiver.AdminReceiver
-import com.jayden.deviceadministration.app.service.AdminService
 import com.jayden.deviceadministration.app.service.ProvisioningForegroundService
-import com.jayden.deviceadministration.app.theme.AppTheme
-import com.jayden.deviceadministration.app.viewmodel.MainViewModel
+import com.jayden.deviceadministration.core.design.theme.AppTheme
+import com.jayden.deviceadministration.feature.dashboard.ui.AdminStateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.component.KoinComponent
 
 class MainActivity : AppCompatActivity(), KoinComponent {
-    val viewModel: MainViewModel by viewModel()
+    val viewModel: AdminStateViewModel by viewModel()
 
     private val adminReceiver by lazy { ComponentName(applicationContext, AdminReceiver::class.java) }
 
@@ -41,11 +40,11 @@ class MainActivity : AppCompatActivity(), KoinComponent {
     val provisionManagedProfileResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         when (result.resultCode) {
             RESULT_OK -> {
-                Log.i(TAG, "Profile Created with this app as owner")
+                Log.i(TAG, "Profile setup flow now proceeding")
                 viewModel.refreshAdminStatus()
             }
             RESULT_CANCELED -> {
-                Log.i(TAG, "Profile creation unsuccessful")
+                Log.i(TAG, "Profile setup flow unsuccessful")
             }
         }
         stopService(Intent(this, ProvisioningForegroundService::class.java))
@@ -53,9 +52,6 @@ class MainActivity : AppCompatActivity(), KoinComponent {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (viewModel.adminStatus.value.adminGranted) {
-            startService(Intent(applicationContext, AdminService::class.java))
-        }
         setContent {
             AppTheme.UseAppTheme {
                 AdminDashboardScreen(
@@ -96,6 +92,11 @@ class MainActivity : AppCompatActivity(), KoinComponent {
                 )
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        viewModel.refreshAdminStatus()
     }
 
     companion object {

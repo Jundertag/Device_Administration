@@ -1,0 +1,19 @@
+package com.jayden.deviceadministration.feature.logs.tcp.data
+
+import androidx.paging.PagingSource
+import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.Query
+
+@Dao
+interface TcpNetworkEventDao {
+    @Insert
+    suspend fun insertAll(logs: List<TcpNetworkEventEntity>)
+
+    @Delete
+    suspend fun deleteLog(log: TcpNetworkEventEntity)
+
+    @Query("SELECT * FROM TcpNetworkEventEntity ORDER BY logTimestamp DESC")
+    fun pagingSource(): PagingSource<Int, TcpNetworkEventEntity>
+}
